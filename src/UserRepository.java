@@ -1,6 +1,9 @@
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserRepository {
 
@@ -35,13 +38,55 @@ public class UserRepository {
         } catch (SQLException e) {
 
             // TODO Auto-generated catch block
-            System.out.println("Error: Não foi possivel inserir o Usuario: ");
+            System.out.println("Error: Não foi possivel inserir o Usuario!");
             e.printStackTrace();
 
         }
     }
 
-    public void selectAll(){}
+    public User getOne(int id) {  
+
+        String sql = "SELECT * FROM tb_user WHERE id =?";
+        
+        return null;
+    }
+
+    public List<User> selectAll(){
+
+        String sql = "SELECT * FROM tb_user";
+
+        List<User> users = new ArrayList<User>();
+
+        try {
+            PreparedStatement ps = this.conn.prepareStatement(sql);
+
+           // ps.executeQuery(); //somente em selectAll
+           ResultSet rs = ps.executeQuery();
+
+           while(rs.next()){ // toda consulta 
+             // System.out.println(
+                // rs.getInt("id") +" - " +
+                // rs.getString("username") +" - " +
+                // rs.getString("password")
+                // );
+                User u = new User();
+                u.setId(rs.getInt("id"));
+                u.setUsername(rs.getString("username"));
+                u.setPassword(rs.getString("password"));
+                u.setToken(rs.getDouble("token"));
+                users.add(u);
+           }
+
+           System.out.println(rs);
+           
+        } catch (SQLException e) {
+            System.out.println("Error: Não foi possivel buscar os usuários");
+            e.printStackTrace();
+        }
+       
+        return null;
+
+    }
 
     public void update(User _user){}
 

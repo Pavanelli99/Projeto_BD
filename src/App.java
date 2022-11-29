@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class App {
    
     public static void main(String[] args){
@@ -5,16 +7,18 @@ public class App {
       //  ConnectionFactory.createConnection();
         
 
-        User eduardo = new User();
+        User paulo = new User();
 
 
-        eduardo.setUsername("eduardo");
-        eduardo.setPassword("1234");
-        eduardo.setStatus( 1);
-        eduardo.setToken(3.1415);
+        paulo.setUsername("paulo");
+        paulo.setPassword("1234");
+        paulo.setStatus( 0);
+        paulo.setToken(7.333);
 
         UserRepository userRepository = new UserRepository();
-        userRepository.save(eduardo);
+       // userRepository.save(paulo);
+
+        List <User> users = userRepository.selectAll();
 
         
 
