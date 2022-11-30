@@ -46,9 +46,37 @@ public class UserRepository {
 
     public User getOne(int id) {  
 
-        String sql = "SELECT * FROM tb_user WHERE id =?";
-        
+        String sql = "SELECT * FROM tb_user WHERE id =? ";
+        User u = new User();
+
+        try {
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){ 
+                   u.setId(rs.getInt("id"));
+                   u.setUsername(rs.getString("username"));
+                   u.setPassword(rs.getString("password"));
+                   u.setStatus(rs.getInt("status"));
+                   u.setToken(rs.getDouble("token"));
+              }
+
+              //System.out.println(rs);
+
+              
+              return u;
+        } catch (SQLException e) {
+
+            // TODO Auto-generated catch block
+            System.out.println("Erro ao buscar usuário com id =" + id);
+            e.printStackTrace();
+        }
+
         return null;
+        
     }
 
     public List<User> selectAll(){
@@ -61,6 +89,7 @@ public class UserRepository {
             PreparedStatement ps = this.conn.prepareStatement(sql);
 
            // ps.executeQuery(); //somente em selectAll
+           
            ResultSet rs = ps.executeQuery();
 
            while(rs.next()){ // toda consulta 
@@ -90,7 +119,29 @@ public class UserRepository {
 
     public void update(User _user){}
 
-    public void delete(User _user){}
+    public boolean delete(int id){
+
+        String sql = "DELETE FROM tb_user WHERE id = ?";
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1,id);
+
+            ps.executeUpdate();
+            return true;
+
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+
+            System.out.println("Erro: Não foi possivel deletar o usuario");
+            e.printStackTrace();
+        }
+
+
+        return false;
+
+    }
 
      
 }
