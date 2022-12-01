@@ -102,6 +102,7 @@ public class UserRepository {
                 u.setId(rs.getInt("id"));
                 u.setUsername(rs.getString("username"));
                 u.setPassword(rs.getString("password"));
+                u.setStatus(rs.getInt("status"));
                 u.setToken(rs.getDouble("token"));
                 users.add(u);
            }
@@ -117,7 +118,31 @@ public class UserRepository {
 
     }
 
-    public void update(User _user){}
+    public boolean update(User _user){
+
+        String sql = "UPDATE tb_user SET username = ?, password = ?, status = ?, token = ? WHERE id = ?";
+        
+        try {
+            PreparedStatement ps = this.conn.prepareStatement(sql);
+            
+            ps.setString(1, _user.getUsername());
+            ps.setString(1, _user.getPassword());
+            ps.setInt(1, _user.getStatus());
+            ps.setDouble(1, _user.getToken());
+
+            ps.setInt(1, _user.getId());
+
+            ps.executeUpdate();
+            return true;
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            System.out.println("Erro: Usuario não pode ser atualizado");
+            e.printStackTrace();
+        }
+        return false;
+
+    }
 
     public boolean delete(int id){
 
@@ -143,5 +168,37 @@ public class UserRepository {
 
     }
 
+    public List<User> selectAllActive () {
+        
+        String sql = "SELECT * FROM tb_user WHERE status = 1";
+
+        List<User> activeUsers = new ArrayList<User>();
+
+        try {
+            PreparedStatement ps = this.conn.prepareStatement(sql);
+
+           // ps.executeQuery(); //somente em selectAll
+           
+           ResultSet rs = ps.executeQuery();
+
+           while(rs.next()){ // toda consulta 
+                User u = new User();
+                u.setId(rs.getInt("id"));
+                u.setUsername(rs.getString("username"));
+                u.setPassword(rs.getString("password"));
+                u.setStatus(rs.getInt("status"));
+                u.setToken(rs.getDouble("token"));
+                activeUsers.add(u);
+           }
+
+           System.out.println(rs);
+           
+        } catch (SQLException e) {
+            System.out.println("Erro: Não foi possivel buscar os usuários ativos");
+            e.printStackTrace();
+        }
+       
+        return activeUsers;
+    }
      
 }

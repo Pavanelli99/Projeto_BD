@@ -48,10 +48,10 @@ public class User {
 
     @Override
     public String toString() {
-        return "(id=" + id 
-        + ", username= " + username 
-        + ", password= " + password 
-        + ",tokem= " + token + " )"; 
+        return "id =" + id 
+        + ", \nusername = " + username 
+        + ", \npassword = " + password 
+        + ",\ntokem = " + token + " \n\n"; 
 
     }
 

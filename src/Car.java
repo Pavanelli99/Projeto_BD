@@ -1,8 +1,9 @@
 import java.time.LocalDate;
 
-public class Cars {
+public class Car {
    private int id;
    private String name;
+   private String model;
    private LocalDate dt_Fabrication;
    private double value;
 
@@ -21,6 +22,14 @@ public class Cars {
 
    public void setName(String name) {
       this.name = name;
+   }
+
+   public String getModel() {
+      return this.model;
+   }
+
+   public void setModel(String model) {
+      this.model = model;
    }
 
    public LocalDate getDt_Fabrication() {

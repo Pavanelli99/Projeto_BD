@@ -9,13 +9,13 @@ public class App {
       //  ConnectionFactory.createConnection();
         
 
-        User paulo = new User();
+        User usr= new User();
 
-
-        paulo.setUsername("paulo");
-        paulo.setPassword("1234");
-        paulo.setStatus( 0);
-        paulo.setToken(7.333);
+        usr.setId(3);
+        usr.setUsername("paulinho");
+        usr.setPassword("1234");
+        usr.setStatus( 0);
+        usr.setToken(7.333);
 
         
        //Salvar um usuario
@@ -30,23 +30,30 @@ public class App {
 
        //Buscar pelo ID
        // ------------------------------------------------------------
-        User loc = userRepository.getOne(1);
+        // User loc = userRepository.getOne(1);
 
-        if(loc.getUsername() != null){
-          System.out.println("Usuario encotrado:\n " + loc);
+        // if(loc.getUsername() != null){
+        //   System.out.println("Usuario encotrado:\n " + loc);
 
-        }else{
-          System.out.println("Usuario não encotrado");
-        }
+        // }else{
+        //   System.out.println("Usuario não encotrado");
+        // }
 
         // ------------------------------------------------------------
         // Deletar usuario pelo ID / OBJ
         // ------------------------------------------------------------
-        if(userRepository.delete(1)){
-          System.out.println("Usuario deletado");
-        }else{
-          System.out.println("Não foi possivel deletar o usuario");
-        }
+        // if(userRepository.delete(1)){
+        //   System.out.println("Usuario deletado");
+        // }else{
+        //   System.out.println("Não foi possivel deletar o usuario");
+        // 
+        //------------------------------------------------------------
+        // Atualizar User
+        //userRepository.update(users);
+
+        List <User> activeUsers = userRepository.selectAllActive();
+        for(User u : activeUsers)
+        System.out.println(u);
 
 
 
